@@ -1,10 +1,7 @@
 package br.com.ada.store.config;
 
 import br.com.ada.store.dto.ErrorDTO;
-import br.com.ada.store.exception.ApplicationNotFoundException;
-import br.com.ada.store.exception.DuplicatedFieldException;
-import br.com.ada.store.exception.GameNotFoundException;
-import br.com.ada.store.exception.UserNotFoundException;
+import br.com.ada.store.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -47,6 +44,12 @@ public class HandlerException {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(ApplicationNotFoundException.class)
     public ErrorDTO handleApplicationNotFoundException(ApplicationNotFoundException ex) {
+        return ErrorDTO.builder().message(ex.getMessage()).build();
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(LibraryNotFoundException.class)
+    public ErrorDTO handleLibraryNotFoundException(LibraryNotFoundException ex) {
         return ErrorDTO.builder().message(ex.getMessage()).build();
     }
 
