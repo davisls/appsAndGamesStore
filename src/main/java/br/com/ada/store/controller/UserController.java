@@ -1,5 +1,6 @@
 package br.com.ada.store.controller;
 
+import br.com.ada.store.domain.Library;
 import br.com.ada.store.domain.User;
 import br.com.ada.store.dto.UserSaveDTO;
 import br.com.ada.store.mapper.UserMapper;
@@ -9,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashSet;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -29,10 +31,20 @@ public class UserController {
         return userService.findById(id);
     }
 
+    @GetMapping("{id}/library")
+    public Library getLibraryByUserId(@PathVariable Long id) {
+        return userService.findById(id).getLibrary();
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public User save(@Valid @RequestBody UserSaveDTO dto) {
         User user = userMapper.userSaveDTOToUser(dto);
+        Library library = Library.builder()
+                .games(new HashSet<>())
+                .applications(new HashSet<>())
+                .build();
+        user.setLibrary(library);
         return userService.save(user);
     }
 

@@ -2,6 +2,7 @@ package br.com.ada.store.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Cascade;
 
 @Getter
 @Setter
@@ -23,7 +24,8 @@ public class User {
     private String password;
 
 //    private TypeUser type;
-//
-//    private Long LibraryId;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private Library library;
 
 }

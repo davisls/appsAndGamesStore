@@ -8,7 +8,8 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface UserMapper {
 
-    @Mapping(target = "id", ignore = true)
+    // @Mapping(target = "id", ignore = true)
+    // @Mapping(target = "library", ignore = true)
     User userSaveDTOToUser(UserSaveDTO dto);
 
 }
