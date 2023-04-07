@@ -1,6 +1,7 @@
 package br.com.ada.store.controller;
 
 import br.com.ada.store.domain.Application;
+import br.com.ada.store.domain.ApplicationCategory;
 import br.com.ada.store.dto.ApplicationSaveDTO;
 import br.com.ada.store.mapper.ApplicationMapper;
 import br.com.ada.store.service.ApplicationService;
@@ -22,6 +23,12 @@ public class ApplicationController {
     @GetMapping
     public List<Application> list() {
         return applicationService.list();
+    }
+
+    @GetMapping("/category/{category}")
+    public List<Application> listByCategories(@PathVariable ApplicationCategory category) {
+        List<Application> allApps = applicationService.list();
+        return allApps.stream().filter(app -> app.getCategories().contains(category)).toList();
     }
 
     @GetMapping("{id}")

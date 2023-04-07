@@ -1,10 +1,12 @@
 package br.com.ada.store.controller;
 
 import br.com.ada.store.domain.Game;
+import br.com.ada.store.domain.GameCategory;
 import br.com.ada.store.dto.GameSaveDTO;
 import br.com.ada.store.mapper.GameMapper;
 import br.com.ada.store.service.GameService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +24,12 @@ public class GameController {
     @GetMapping
     public List<Game> list() {
         return gameService.list();
+    }
+
+    @GetMapping("/category/{category}")
+    public List<Game> listByCategories(@PathVariable GameCategory category) {
+        List<Game> allGames = gameService.list();
+        return allGames.stream().filter(game -> game.getCategories().contains(category)).toList();
     }
 
     @GetMapping("{id}")
